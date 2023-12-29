@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#app {
+  width: 100%;
+  margin: 0 auto;
+}
+
+@layer components {
+  .btn {
+    @apply w-full max-w-xs rounded-md px-6 py-2;
+  }
+  .btn-outline {
+    @apply border-2 border-gray-500 hover:border-primary;
+  }
+  .btn-primary {
+    @apply bg-primary text-white opacity-90 hover:opacity-100;
+  }
+  .btn-danger {
+    @apply bg-danger text-white opacity-90 hover:opacity-100;
+  }
+  .btn-block {
+    @apply block max-w-none;
+  }
+  .container {
+    @apply m-auto w-full max-w-screen-xl;
+  }
+  .centered {
+    @apply place-content-center place-items-center;
+  }
+  .form-input {
+    @apply w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:border-primary focus:outline-none;
+  }
+  .form-select {
+    @apply w-full rounded border bg-white p-2 leading-tight text-gray-700 shadow focus:border-primary focus:outline-none;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+@media (min-width: 1024px) {
+}
