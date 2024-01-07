@@ -26,8 +26,7 @@ let foodFormDefault: FoodFormType = {
     carbs: 0,
     fat: 0,
     fiber: 0,
-    calories: 0,
-    fodmap: 0
+    calories: 0
   },
   is_favorite: false
 }
@@ -65,6 +64,8 @@ const upsertFoodItem = async () => {
 
   emit('closed')
   emit('foodsUpdated')
+
+  toastStore.showToast({ title: 'Food Item Saved' })
 }
 
 const deleteFoodItem = async () => {
@@ -95,8 +96,8 @@ const deleteFoodItem = async () => {
 
     <template #body>
       <form @submit.prevent="upsertFoodItem">
-        <div class="grid grid-cols-2">
-          <div class="mb-4 mr-1 text-left">
+        <div class="grid grid-cols-2 gap-2">
+          <div class="mb-4 text-left">
             <label class="block text-sm text-gray-700">
               <b>Name</b>
               <input
@@ -108,7 +109,7 @@ const deleteFoodItem = async () => {
             </label>
           </div>
 
-          <div class="mb-4 ml-1 text-left">
+          <div class="mb-4 text-left">
             <label class="block text-sm text-gray-700">
               <b>Category</b>
               <select required class="form-select mt-2" v-model="foodForm.category">
@@ -119,7 +120,7 @@ const deleteFoodItem = async () => {
             </label>
           </div>
 
-          <div class="col-span-2 mb-4 mr-1 text-left">
+          <div class="col-span-2 mb-4 text-left">
             <label class="block text-sm text-gray-700">
               <b>Note</b>
               <textarea
@@ -130,9 +131,9 @@ const deleteFoodItem = async () => {
             </label>
           </div>
 
-          <div class="mb-4 mr-1 text-left">
+          <div class="mb-4 text-left">
             <label class="block text-sm text-gray-700">
-              <b>Protein</b>
+              <b>Protein (g)</b>
               <input
                 required
                 class="form-input mt-2"
@@ -143,9 +144,9 @@ const deleteFoodItem = async () => {
             </label>
           </div>
 
-          <div class="mb-4 ml-1 text-left">
+          <div class="mb-4 text-left">
             <label class="block text-sm text-gray-700">
-              <b>Carbs</b>
+              <b>Carbs (g)</b>
               <input
                 required
                 class="form-input mt-2"
@@ -156,9 +157,9 @@ const deleteFoodItem = async () => {
             </label>
           </div>
 
-          <div class="mb-4 mr-1 text-left">
+          <div class="mb-4 text-left">
             <label class="block text-sm text-gray-700">
-              <b>Fat</b>
+              <b>Fat (g)</b>
               <input
                 required
                 class="form-input mt-2"
@@ -169,9 +170,9 @@ const deleteFoodItem = async () => {
             </label>
           </div>
 
-          <div class="mb-4 ml-1 text-left">
+          <div class="mb-4 text-left">
             <label class="block text-sm text-gray-700">
-              <b>Fiber</b>
+              <b>Fiber (g)</b>
               <input
                 required
                 class="form-input mt-2"
@@ -182,26 +183,13 @@ const deleteFoodItem = async () => {
             </label>
           </div>
 
-          <div class="mb-4 mr-1 text-left">
+          <div class="mb-4 text-left">
             <label class="block text-sm text-gray-700">
-              <b>Calories</b>
+              <b>Calories (kcal)</b>
               <input
                 required
                 class="form-input mt-2"
                 v-model="foodForm.macros.calories"
-                type="number"
-                step="any"
-              />
-            </label>
-          </div>
-
-          <div class="mb-4 ml-1 text-left">
-            <label class="block text-sm text-gray-700">
-              <b>Fodmap</b>
-              <input
-                required
-                class="form-input mt-2"
-                v-model="foodForm.macros.fodmap"
                 type="number"
                 step="any"
               />

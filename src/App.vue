@@ -2,18 +2,21 @@
 import { onMounted, ref, computed } from 'vue'
 import SocialSignIn from './components/SocialSignIn.vue'
 import IconLogo from './components/icons/IconLogo.vue'
-import Diary from './components/pages/Diary.vue'
+import Journal from './components/pages/Journal.vue'
 import Foods from './components/pages/Foods.vue'
+import Meals from './components/pages/Meals.vue'
 import Targets from './components/pages/Targets.vue'
 import Account from './components/pages/Account.vue'
 import Dropdown from './components/Dropdown.vue'
 import Toast from './components/Toast.vue'
+import Datepicker from './components/Datepicker.vue'
 import { supabase } from '@/supabase'
 import { useSessionStore } from '@/stores/session'
 
 const routes: { [key: string]: any } = {
-  diary: Diary,
+  journal: Journal,
   foods: Foods,
+  meals: Meals,
   targets: Targets,
   account: Account
 }
@@ -25,7 +28,7 @@ window.addEventListener('hashchange', () => {
 })
 
 const currentView = computed(() => {
-  return routes[currentPath.value.slice(1) || 'diary'] || Diary
+  return routes[currentPath.value.slice(1) || 'journal'] || Journal
 })
 
 const session = useSessionStore()
@@ -49,20 +52,18 @@ onMounted(() => {
       <div class="container flex justify-between">
         <div>
           <Dropdown
-            :options="['Diary', 'Foods', 'Targets', 'Account']"
+            :options="['Journal', 'Foods', 'Meals', 'Targets', 'Account']"
             :current-view="currentView"
           />
         </div>
 
         <div>
-          <span>&lt;-</span>
-          <span> Today </span>
-          <span>-&gt;</span>
+          <Datepicker v-if="currentView == Journal" />
         </div>
       </div>
     </nav>
 
-    <main class="container text-center">
+    <main class="container p-4 text-center">
       <component :is="currentView" />
     </main>
   </div>
@@ -93,7 +94,7 @@ onMounted(() => {
           Add barcodes to saved foods to quickly find them in the future.
         </li>
         <li class="border-gray centered w-30 m-2 flex rounded border-2 p-4 md:m-4 md:w-60 md:p-6">
-          Set recurring meals to automatically add them to the diary every day.
+          Set recurring meals to automatically add them to the journal every day.
         </li>
       </ul>
 

@@ -7,4 +7,4 @@ Calorie and macro tracking app. Built using vue and supabase.
 - Set goals for daily macros, as well as per-meal macros.
 - Create custom foods or select from the spoontacular API.
 - Add barcodes to saved foods to quickly find them in the future.
-- Set recurring meals to automatically add them to the diary every day.
+- Set recurring meals to automatically add them to the journal every day.

@@ -7,7 +7,11 @@ import type { FoodItem } from '@/custom_types/FoodItem.type'
 
 const toastStore = useToastStore()
 
-const emit = defineEmits(['foodItemClicked'])
+const emit = defineEmits(['foodItemSelected'])
+
+const props = defineProps<{
+  selectedFoodItem: FoodItem | null
+}>()
 
 const foods: Ref<FoodItem[]> = ref([])
 const search: Ref<String> = ref('')
@@ -18,8 +22,7 @@ watchEffect(async () => {
     .from('food_items')
     .select()
     .limit(20)
-    .order('last_used_at', { ascending: false })
-    .order('created_at', { ascending: false })
+    .order('last_used_at', { ascending: false, nullsFirst: false })
 
   if (search.value.length) {
     query = query.ilike('name', `%${search.value}%`)
@@ -41,7 +44,7 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <div class="m-2 mb-4 grid grid-cols-1 md:grid-cols-2">
+  <div class="mb-4 grid grid-cols-1 md:grid-cols-2">
     <div class="md:mr-2">
       <input
         type="search"
@@ -66,16 +69,14 @@ watchEffect(async () => {
   </div>
 
   <h4 class="my-8 text-center" v-if="!foods.length">No Results</h4>
-  <div v-else class="grid grid-cols-2 text-left sm:grid-cols-3 md:grid-cols-4">
+  <div v-else class="grid grid-cols-2 gap-2 text-left sm:grid-cols-3 md:grid-cols-4">
     <div
       v-for="(item, index) in foods"
-      class="m-2 mb-4 cursor-pointer border p-2"
-      @click="$emit('foodItemClicked', item)"
+      class="mb-4 cursor-pointer rounded border-2 p-3"
+      :class="selectedFoodItem && selectedFoodItem.id == item.id ? 'border-primary' : ''"
+      @click="$emit('foodItemSelected', item)"
     >
-      <h4>
-        <b class="block text-lg">{{ item.name }}</b
-        ><span>{{ item.category }}</span>
-      </h4>
+      {{ item.name }}
     </div>
   </div>
 </template>

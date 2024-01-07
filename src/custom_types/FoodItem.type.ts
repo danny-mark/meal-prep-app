@@ -1,11 +1,4 @@
-export interface Macros {
-  protein: number
-  carbs: number
-  fat: number
-  fiber: number
-  calories: number
-  fodmap: number
-}
+import type { Macros } from './Macros.type'
 
 export interface FoodItem {
   id?: number

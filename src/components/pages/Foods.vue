@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import FoodEditorDialog from '@/components/dialogs/FoodEditorDialog.vue'
-import FoodList from '../FoodList.vue'
+import FoodSelector from '../FoodSelector.vue'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import type { FoodItem } from '@/custom_types/FoodItem.type'
 
 const isFoodEditorDialogOpen: Ref<boolean> = ref(false)
 const foodEditorItem: Ref<FoodItem | null> = ref(null)
-const foodListKey: Ref<number> = ref(0)
+const foodSelectorKey: Ref<number> = ref(0)
 
-const forceFoodListRerender = () => {
-  foodListKey.value++
+const forceFoodSelectorRerender = () => {
+  foodSelectorKey.value++
 }
 
 const openFoodEditor = (item: FoodItem | null) => {
@@ -22,7 +22,11 @@ const openFoodEditor = (item: FoodItem | null) => {
 <template>
   <h2 class="mb-10 text-2xl font-bold">Foods</h2>
 
-  <FoodList @food-item-clicked="openFoodEditor" :key="foodListKey" />
+  <FoodSelector
+    @food-item-selected="openFoodEditor"
+    :key="foodSelectorKey"
+    :selected-food-item="foodEditorItem"
+  />
 
   <button class="btn btn-primary mx-auto mb-20 mt-4 block" @click="() => openFoodEditor(null)">
     Add Food
@@ -31,7 +35,12 @@ const openFoodEditor = (item: FoodItem | null) => {
   <FoodEditorDialog
     :isOpen="isFoodEditorDialogOpen"
     :foodEditorItem="foodEditorItem"
-    @closed="isFoodEditorDialogOpen = false"
-    @foodsUpdated="forceFoodListRerender"
+    @closed="
+      () => {
+        isFoodEditorDialogOpen = false
+        foodEditorItem = null
+      }
+    "
+    @foodsUpdated="forceFoodSelectorRerender"
   />
 </template>

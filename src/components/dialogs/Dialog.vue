@@ -21,8 +21,10 @@ watch(
 )
 </script>
 
+<!-- TODO SIZES -->
+
 <template>
-  <dialog class="w-full max-w-lg rounded p-8" ref="dialog" @close="$emit('dialogClosedEvent')">
+  <dialog class="w-full max-w-3xl rounded p-8" ref="dialog" @close="$emit('dialogClosedEvent')">
     <div class="mb-10 flex items-center justify-between">
       <slot name="title"></slot>
       <span

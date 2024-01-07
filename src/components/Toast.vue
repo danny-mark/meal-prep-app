@@ -6,7 +6,7 @@ const toast = useToastStore()
 <template>
   <div
     v-if="toast.isShown"
-    class="toast absolute right-4 top-4 rounded px-8 py-4 text-white"
+    class="toast absolute bottom-4 right-4 rounded px-8 py-4 text-white"
     :class="{
       'bg-primary': toast.style === 'primary',
       'bg-danger': toast.style === 'danger'
