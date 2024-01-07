@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { Macros, MacroKey } from '@/custom_types/Macros.type'
+import { useGlobalStore } from '@/stores/globalStatic';
+const globals = useGlobalStore();
 
 const props = defineProps<{
   targets: Macros
@@ -15,7 +17,7 @@ const getPercentage = (item: MacroKey): number => {
 
 <template>
   <div class="m-auto w-full max-w-lg">
-    <div v-for="(item, index) in $macros" class="mb-2">
+    <div v-for="(item, index) in globals.macros" class="mb-2">
       <div class="flex justify-between">
         <h5 class="text-left">
           <b class="capitalize">{{ item }}</b> - {{ consumed[item as MacroKey].toFixed(1) }} /

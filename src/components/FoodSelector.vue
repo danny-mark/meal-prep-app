@@ -4,7 +4,8 @@ import { supabase } from '@/supabase'
 import { ref, watchEffect } from 'vue'
 import type { Ref } from 'vue'
 import type { FoodItem } from '@/custom_types/FoodItem.type'
-
+import { useGlobalStore } from '@/stores/globalStatic';
+const globals = useGlobalStore();
 const toastStore = useToastStore()
 
 const emit = defineEmits(['foodItemSelected'])
@@ -59,7 +60,7 @@ watchEffect(async () => {
           <b>Category</b>
           <select required class="form-select ml-2 text-lg" v-model="categoryFilter">
             <option value="all">all</option>
-            <option v-for="(item, index) in $foodCategories">
+            <option v-for="(item, index) in globals.foodCategories">
               {{ item }}
             </option>
           </select>

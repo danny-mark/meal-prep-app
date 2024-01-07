@@ -5,7 +5,9 @@ import Dialog from './Dialog.vue'
 import type { Macros, MacroKey } from '@/custom_types/Macros.type'
 import { useLocalStorage } from '@vueuse/core'
 import type { JournalFood } from '@/custom_types/JournalEntry.type'
-import {calculateMacrosPerAmount} from '@/shared/calculateMacros'
+import { calculateMacrosPerAmount } from '@/shared/calculateMacros'
+import { useGlobalStore } from '@/stores/globalStatic'
+const globals = useGlobalStore()
 
 const emit = defineEmits(['closed', 'saved'])
 
@@ -70,7 +72,7 @@ const updateFoodAmount = () => {
 
           <div style="width: 160px" class="text-left">
             <b>Macros per {{ amount || 100 }} g</b>
-            <div v-for="(item, index) in $macros">
+            <div v-for="(item, index) in globals.macros">
               <div class="flex justify-between">
                 <span class="text-muted">{{ item }}:</span>
                 <span

@@ -5,7 +5,8 @@ import type { Ref } from 'vue'
 import Dialog from './Dialog.vue'
 import { useToastStore } from '@/stores/toast'
 import type { FoodItem } from '@/custom_types/FoodItem.type'
-
+import { useGlobalStore } from '@/stores/globalStatic'
+const globals = useGlobalStore()
 const toastStore = useToastStore()
 
 const emit = defineEmits(['closed', 'foodsUpdated'])
@@ -113,7 +114,7 @@ const deleteFoodItem = async () => {
             <label class="block text-sm text-gray-700">
               <b>Category</b>
               <select required class="form-select mt-2" v-model="foodForm.category">
-                <option v-for="(item, index) in $foodCategories">
+                <option v-for="(item, index) in globals.foodCategories">
                   {{ item }}
                 </option>
               </select>
