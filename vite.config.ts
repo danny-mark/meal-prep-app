@@ -15,7 +15,7 @@ export default defineConfig({
       manifest: {
         name: 'Meal Prep App',
         short_name: 'Meal Prep App',
-        theme_color: '#000',
+        theme_color: '#fff720',
         background_color: '#fff720',
         display: 'standalone',
         orientation: 'portrait',
