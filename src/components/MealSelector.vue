@@ -40,7 +40,7 @@ watchEffect(async () => {
 
 <template>
   <div
-    class="mb-8 w-1/4 cursor-pointer rounded border-2 p-3 text-left"
+    class="mb-8 w-1/2 cursor-pointer rounded border-2 p-2 text-left text-sm md:w-1/4"
     @click="$emit('mealItemSelected', null)"
     :class="!selectedMealItem ? 'border-primary' : ''"
   >
@@ -49,7 +49,7 @@ watchEffect(async () => {
 
   <hr class="my-6" />
 
-  <div class="mb-4 w-1/2">
+  <div class="mb-4 w-full">
     <input
       type="search"
       class="form-input"
@@ -62,7 +62,7 @@ watchEffect(async () => {
   <div v-else class="grid grid-cols-2 gap-2 text-left sm:grid-cols-3 md:grid-cols-4">
     <div
       v-for="(item, index) in meals"
-      class="mb-4 cursor-pointer rounded border-2 p-3"
+      class="cursor-pointer rounded border-2 p-2 text-sm"
       :class="selectedMealItem && selectedMealItem.id == item.id ? 'border-primary' : ''"
       @click="$emit('mealItemSelected', item)"
     >

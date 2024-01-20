@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Macros, MacroKey } from '@/custom_types/Macros.type'
-import { useGlobalStore } from '@/stores/globalStatic';
-const globals = useGlobalStore();
+import { useGlobalStore } from '@/stores/globalStatic'
+const globals = useGlobalStore()
 
 const props = defineProps<{
   targets: Macros
@@ -12,7 +12,7 @@ const props = defineProps<{
 <template>
   <div class="flex text-left">
     <div v-for="macro in globals.macros">
-      <div v-if="targets[macro as MacroKey]" class="mr-6 text-sm">
+      <div v-if="targets[macro as MacroKey]" class="mr-4 text-sm">
         <span class="text-muted">{{ macro }}</span>
         <p>
           {{ consumed[macro as MacroKey].toFixed(0) }} /

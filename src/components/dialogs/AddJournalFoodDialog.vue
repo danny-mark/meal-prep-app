@@ -92,7 +92,7 @@ const closeAndResetDialog = () => {
         <hr class="my-6" />
 
         <div class="flex">
-          <div class="mr-8 text-left" style="width: 200px">
+          <div class="mr-8 text-left" style="width: 120px">
             <h5 class="font-bold">{{ selectedFood.name }}</h5>
             <p class="mb-2 text-xs text-muted">{{ selectedFood.category }}</p>
             <p class="text-sm" v-if="selectedFood.note">{{ selectedFood.note }}</p>

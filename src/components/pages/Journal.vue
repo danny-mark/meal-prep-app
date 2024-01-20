@@ -118,6 +118,15 @@ watch(dateStore, (newDate) => {
   fetchEntries()
 })
 
+const bottomAnchor: Ref<HTMLElement | undefined> = ref()
+
+watch(entries, () => {
+  // // Scroll to bottom when entries change
+  if (bottomAnchor.value) {
+    bottomAnchor.value.scrollIntoView({ behavior: 'instant', block: 'end' })
+  }
+})
+
 const fetchEntries = async () => {
   // TODO: optimize the refresh
 
@@ -285,8 +294,8 @@ const deleteEntry = async (entry: JournalEntry) => {
 
   <hr class="my-6" />
 
-  <div class="m-auto mb-20 max-w-xl px-6">
-    <div v-for="(entry, index) in entries" :key="index" class="border-b p-2 last:border-b-0">
+  <div class="m-auto mb-20 max-w-xl lg:px-6">
+    <div v-for="(entry, index) in entries" :key="index" class="border-b py-2 last:border-b-0">
       <div
         v-if="entry.type == 'food'"
         class="flex justify-between"
@@ -297,10 +306,10 @@ const deleteEntry = async (entry: JournalEntry) => {
           <p>{{ entry.contents[0].amount }} g</p>
         </div>
         <div class="centered flex text-xl">
-          <div class="mr-4 cursor-pointer p-4 text-primary" @click.stop="repeatEntry(entry)">
+          <div class="mr-2 cursor-pointer p-2 text-primary" @click.stop="repeatEntry(entry)">
             <IconRepeat />
           </div>
-          <div class="cursor-pointer p-4 text-danger" @click.stop="deleteEntry(entry)">
+          <div class="cursor-pointer p-2 text-danger" @click.stop="deleteEntry(entry)">
             <IconTrash />
           </div>
         </div>
@@ -320,7 +329,7 @@ const deleteEntry = async (entry: JournalEntry) => {
             </div>
             <div
               v-else
-              class="mr-4 cursor-pointer p-4 text-primary"
+              class="mr-2 cursor-pointer p-2 text-primary"
               @click.stop="
                 () => {
                   favoriteMealDialogState = {
@@ -333,10 +342,10 @@ const deleteEntry = async (entry: JournalEntry) => {
               <IconStarOutline />
             </div>
 
-            <div class="mr-4 cursor-pointer p-4 text-primary" @click.stop="repeatEntry(entry)">
+            <div class="mr-2 cursor-pointer p-2 text-primary" @click.stop="repeatEntry(entry)">
               <IconRepeat />
             </div>
-            <div class="cursor-pointer p-4 text-danger" @click.stop="deleteEntry(entry)">
+            <div class="cursor-pointer p-2 text-danger" @click.stop="deleteEntry(entry)">
               <IconTrash />
             </div>
           </div>
@@ -352,6 +361,8 @@ const deleteEntry = async (entry: JournalEntry) => {
       </div>
     </div>
   </div>
+
+  <div ref="bottomAnchor" class="h-20"></div>
 
   <div class="fixed bottom-0 left-0 w-full border-t bg-white p-4">
     <button

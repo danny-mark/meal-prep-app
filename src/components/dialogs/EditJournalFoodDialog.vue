@@ -64,10 +64,14 @@ const updateFoodAmount = () => {
     <template #body>
       <div v-if="food && macrosCalculated">
         <div class="flex">
-          <div class="mr-8 text-left" style="width: 200px">
+          <div class="mr-8 text-left" style="width: 120px">
             <h5 class="font-bold">{{ food.name }}</h5>
+            <p class="mb-2 text-xs text-muted">{{ food.category }}</p>
             <p class="text-sm" v-if="food.note">{{ food.note }}</p>
-            <input class="form-input mt-4" v-model="amount" step="any" type="number" />
+            <label>
+              <b class="mt-4 block">Amount (g)</b>
+              <input class="form-input" v-model="amount" step="any" type="number" />
+            </label>
           </div>
 
           <div style="width: 160px" class="text-left">

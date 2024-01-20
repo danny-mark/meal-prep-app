@@ -7,6 +7,7 @@ const props = defineProps<{
 }>()
 
 const dialog: Ref<HTMLDialogElement | null> = ref(null)
+const autoFocusPrevention: Ref<boolean> = ref(false)
 
 watch(
   () => props.isOpen,
@@ -14,6 +15,10 @@ watch(
     if (!dialog.value) return
     if (isOpen) {
       dialog.value.showModal()
+      autoFocusPrevention.value = true
+      setTimeout(() => {
+        autoFocusPrevention.value = false
+      }, 100)
     } else {
       dialog.value.close()
     }
@@ -24,8 +29,13 @@ watch(
 <!-- TODO SIZES -->
 
 <template>
-  <dialog class="w-full max-w-3xl rounded p-8" ref="dialog" @close="$emit('dialogClosedEvent')">
-    <div class="mb-10 flex items-center justify-between">
+  <dialog
+    class="m-2 w-[calc(100%-1rem)] max-w-3xl rounded p-4 md:m-auto md:w-full md:p-8"
+    ref="dialog"
+    @close="$emit('dialogClosedEvent')"
+    :inert="autoFocusPrevention"
+  >
+    <div class="mb-8 flex items-center justify-between">
       <slot name="title"></slot>
       <span
         class="h-6 w-6 cursor-pointer rounded-full bg-gray-400 text-2xl leading-none text-white"

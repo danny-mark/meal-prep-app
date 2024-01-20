@@ -21,7 +21,7 @@ const props = defineProps<{
       <b>{{ mealFood.name }}</b>
       <p>{{ mealFood.amount }} g</p>
       <div
-        class="absolute right-0 top-0 cursor-pointer p-4 text-danger"
+        class="absolute right-0 top-0 cursor-pointer p-2 text-danger"
         @click.stop="$emit('trashClicked', entry, j)"
       >
         <IconTrash />

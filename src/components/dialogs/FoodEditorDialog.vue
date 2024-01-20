@@ -16,19 +16,21 @@ const props = defineProps<{
   foodEditorItem: FoodItem | null
 }>()
 
-interface FoodFormType extends Omit<FoodItem, 'created_at' | 'last_used_at'> {}
+interface FoodFormType extends Omit<FoodItem, 'created_at' | 'last_used_at' | 'macros'> {
+  macros: {
+    protein?: number
+    carbs?: number
+    fat?: number
+    fiber?: number
+    calories?: number
+  }
+}
 
 let foodFormDefault: FoodFormType = {
   name: '',
   note: '',
   category: 'protein',
-  macros: {
-    protein: 0,
-    carbs: 0,
-    fat: 0,
-    fiber: 0,
-    calories: 0
-  },
+  macros: {},
   is_favorite: false
 }
 
@@ -67,6 +69,11 @@ const upsertFoodItem = async () => {
   emit('foodsUpdated')
 
   toastStore.showToast({ title: 'Food Item Saved' })
+
+  foodForm.value = {
+    ...foodFormDefault,
+    macros: { ...foodFormDefault.macros }
+  }
 }
 
 const deleteFoodItem = async () => {
@@ -136,7 +143,6 @@ const deleteFoodItem = async () => {
             <label class="block text-sm text-gray-700">
               <b>Protein (g)</b>
               <input
-                required
                 class="form-input mt-2"
                 v-model="foodForm.macros.protein"
                 type="number"
@@ -149,7 +155,6 @@ const deleteFoodItem = async () => {
             <label class="block text-sm text-gray-700">
               <b>Carbs (g)</b>
               <input
-                required
                 class="form-input mt-2"
                 v-model="foodForm.macros.carbs"
                 type="number"
@@ -162,7 +167,6 @@ const deleteFoodItem = async () => {
             <label class="block text-sm text-gray-700">
               <b>Fat (g)</b>
               <input
-                required
                 class="form-input mt-2"
                 v-model="foodForm.macros.fat"
                 type="number"
@@ -175,7 +179,6 @@ const deleteFoodItem = async () => {
             <label class="block text-sm text-gray-700">
               <b>Fiber (g)</b>
               <input
-                required
                 class="form-input mt-2"
                 v-model="foodForm.macros.fiber"
                 type="number"
@@ -188,7 +191,6 @@ const deleteFoodItem = async () => {
             <label class="block text-sm text-gray-700">
               <b>Calories (kcal)</b>
               <input
-                required
                 class="form-input mt-2"
                 v-model="foodForm.macros.calories"
                 type="number"

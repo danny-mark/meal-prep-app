@@ -7,11 +7,11 @@ const calculateMacrosPerAmount = (macros: Macros, amount: number): Macros => {
   }
 
   return {
-    calories: Number(((macros.calories / 100) * amount).toFixed(1)),
-    protein: Number(((macros.protein / 100) * amount).toFixed(1)),
-    fat: Number(((macros.fat / 100) * amount).toFixed(1)),
-    carbs: Number(((macros.carbs / 100) * amount).toFixed(1)),
-    fiber: Number(((macros.fiber / 100) * amount).toFixed(1))
+    calories: macros.calories ? Number(((macros.calories / 100) * amount).toFixed(1)) : 0,
+    protein: macros.protein ? Number(((macros.protein / 100) * amount).toFixed(1)) : 0,
+    fat: macros.fat ? Number(((macros.fat / 100) * amount).toFixed(1)) : 0,
+    carbs: macros.carbs ? Number(((macros.carbs / 100) * amount).toFixed(1)) : 0,
+    fiber: macros.fiber ? Number(((macros.fiber / 100) * amount).toFixed(1)) : 0
   }
 }
 

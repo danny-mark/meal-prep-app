@@ -4,8 +4,8 @@ import { supabase } from '@/supabase'
 import { ref, watchEffect } from 'vue'
 import type { Ref } from 'vue'
 import type { FoodItem } from '@/custom_types/FoodItem.type'
-import { useGlobalStore } from '@/stores/globalStatic';
-const globals = useGlobalStore();
+import { useGlobalStore } from '@/stores/globalStatic'
+const globals = useGlobalStore()
 const toastStore = useToastStore()
 
 const emit = defineEmits(['foodItemSelected'])
@@ -45,20 +45,25 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <div class="mb-4 grid grid-cols-1 md:grid-cols-2">
-    <div class="md:mr-2">
-      <input
-        type="search"
-        class="form-input"
-        placeholder="Search"
-        @search="(e: Event) => (search = (e.target as HTMLInputElement).value.trim())"
-      />
+  <div class="mb-4 grid grid-cols-1 text-sm md:grid-cols-5">
+    <div class="md:col-span-3 md:mr-2">
+      <div class="text-left">
+        <label class="centered block flex text-gray-700">
+          <b>Search</b>
+          <input
+            type="search"
+            class="form-input ml-2"
+            placeholder="Search"
+            @search="(e: Event) => (search = (e.target as HTMLInputElement).value.trim())"
+          />
+        </label>
+      </div>
     </div>
-    <div>
-      <div class="mb-4 mt-6 text-left md:ml-3 md:mt-0">
+    <div class="md:col-span-2">
+      <div class="mb-4 mt-4 text-left md:ml-3 md:mt-0">
         <label class="centered block flex text-gray-700">
           <b>Category</b>
-          <select required class="form-select ml-2 text-lg" v-model="categoryFilter">
+          <select required class="form-select ml-2 text-sm" v-model="categoryFilter">
             <option value="all">all</option>
             <option v-for="(item, index) in globals.foodCategories">
               {{ item }}
@@ -73,7 +78,7 @@ watchEffect(async () => {
   <div v-else class="grid grid-cols-2 gap-2 text-left sm:grid-cols-3 md:grid-cols-4">
     <div
       v-for="(item, index) in foods"
-      class="mb-4 cursor-pointer rounded border-2 p-3"
+      class="cursor-pointer rounded border-2 p-2 text-sm"
       :class="selectedFoodItem && selectedFoodItem.id == item.id ? 'border-primary' : ''"
       @click="$emit('foodItemSelected', item)"
     >
