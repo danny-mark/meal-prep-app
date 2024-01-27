@@ -23,6 +23,9 @@
   .btn-block {
     @apply block max-w-none;
   }
+  .btn-sm {
+    @apply px-4 py-1 text-sm;
+  }
   .container {
     @apply m-auto w-full max-w-screen-xl;
   }
@@ -51,3 +54,5 @@ a {
 
 @media (min-width: 1024px) {
 }
+
+/* TODO: desktop styles */

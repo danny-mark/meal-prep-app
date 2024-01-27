@@ -14,11 +14,15 @@ import IconRepeat from '@/components/icons/IconRepeat.vue'
 import IconTrash from '@/components/icons/IconTrash.vue'
 import IconStarOutline from '@/components/icons/IconStarOutline.vue'
 import IconStarFilled from '@/components/icons/IconStarFilled.vue'
+import Datepicker from '@/components/Datepicker.vue'
+import ActionNavigationBar from '@/components/ActionNavigationBar.vue'
 import { sumMealMacros } from '@/shared/calculateMacros'
 import type { Ref } from 'vue'
 import type { MacroKey, Macros } from '@/custom_types/Macros.type'
 import type { JournalEntry, JournalFood } from '@/custom_types/JournalEntry.type'
+import { useGlobalStore } from '@/stores/globalStatic'
 
+const globals = useGlobalStore()
 const toastStore = useToastStore()
 const dateStore = useDateStore()
 
@@ -88,10 +92,19 @@ const dailyConsumed = computed<Macros>(() => {
 })
 
 const dateFormatted = computed<string>(() => {
+  let now = new Date()
+  if (dateStore.date.toDateString() === now.toDateString()) {
+    return 'Today'
+  }
+
+  now.setDate(now.getDate() - 1)
+  if (dateStore.date.toDateString() === now.toDateString()) {
+    return 'Yesterday'
+  }
+
   return new Intl.DateTimeFormat('en-US', {
     day: 'numeric',
-    month: 'short',
-    year: 'numeric'
+    month: 'short'
   }).format(dateStore.date)
 })
 
@@ -286,8 +299,9 @@ const deleteEntry = async (entry: JournalEntry) => {
 </script>
 
 <template>
-  <div style="max-width: 200px" class="m-auto mb-6 border-b-2 border-primary pb-1 font-bold">
-    {{ dateFormatted }}
+  <div class="mb-4 flex items-center">
+    <Datepicker />
+    <b class="font-lg ml-3">{{ dateFormatted }}</b>
   </div>
 
   <TargetsChart :targets="dailyTargets" :consumed="dailyConsumed" />
@@ -301,7 +315,10 @@ const deleteEntry = async (entry: JournalEntry) => {
         class="flex justify-between"
         @click="editJournalFood(entry, 0)"
       >
-        <div class="text-left">
+        <div
+          class="border-l-8 pl-4 text-left"
+          :style="{ borderLeftColor: globals.foodCategoryColorMap.get(entry.contents[0].category) }"
+        >
           <b>{{ entry.contents[0].name }}</b>
           <p>{{ entry.contents[0].amount }} g</p>
         </div>
@@ -364,20 +381,19 @@ const deleteEntry = async (entry: JournalEntry) => {
 
   <div ref="bottomAnchor" class="h-20"></div>
 
-  <div class="fixed bottom-0 left-0 w-full border-t bg-white p-4">
-    <button
-      class="btn-primary mr-4 inline-block rounded px-8 py-2"
-      @click="addJournalMealDialogState.isOpen = true"
-    >
-      Add Meal
-    </button>
-    <button
-      class="btn-primary inline-block rounded px-8 py-2"
-      @click="() => (addFoodDialogState = { isOpen: true, entry: null })"
-    >
-      Add Food
-    </button>
-  </div>
+  <ActionNavigationBar>
+    <template #buttons>
+      <button class="btn btn-primary btn-sm mr-2" @click="addJournalMealDialogState.isOpen = true">
+        + Meal
+      </button>
+      <button
+        class="btn btn-primary btn-sm"
+        @click="() => (addFoodDialogState = { isOpen: true, entry: null })"
+      >
+        + Food
+      </button>
+    </template>
+  </ActionNavigationBar>
 
   <AddJournalFoodDialog
     :is-open="addFoodDialogState.isOpen"

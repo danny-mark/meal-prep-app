@@ -4,6 +4,7 @@ import FoodSelector from '../FoodSelector.vue'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import type { FoodItem } from '@/custom_types/FoodItem.type'
+import ActionNavigationBar from '../ActionNavigationBar.vue'
 
 const isFoodEditorDialogOpen: Ref<boolean> = ref(false)
 const foodEditorItem: Ref<FoodItem | null> = ref(null)
@@ -28,10 +29,6 @@ const openFoodEditor = (item: FoodItem | null) => {
     :selected-food-item="foodEditorItem"
   />
 
-  <button class="btn btn-primary mx-auto mb-20 mt-4 block" @click="() => openFoodEditor(null)">
-    Add Food
-  </button>
-
   <FoodEditorDialog
     :isOpen="isFoodEditorDialogOpen"
     :foodEditorItem="foodEditorItem"
@@ -43,4 +40,10 @@ const openFoodEditor = (item: FoodItem | null) => {
     "
     @foodsUpdated="forceFoodSelectorRerender"
   />
+
+  <ActionNavigationBar>
+    <template #buttons>
+      <button class="btn btn-primary btn-sm" @click="() => openFoodEditor(null)">Add Food</button>
+    </template>
+  </ActionNavigationBar>
 </template>

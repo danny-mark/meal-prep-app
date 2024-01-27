@@ -63,7 +63,7 @@ const updateFoodAmount = () => {
 
     <template #body>
       <div v-if="food && macrosCalculated">
-        <div class="flex">
+        <div class="flex justify-between">
           <div class="mr-8 text-left" style="width: 120px">
             <h5 class="font-bold">{{ food.name }}</h5>
             <p class="mb-2 text-xs text-muted">{{ food.category }}</p>

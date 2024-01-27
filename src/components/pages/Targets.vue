@@ -5,6 +5,7 @@ import type { Macros } from '@/custom_types/Macros.type'
 import type { Ref } from 'vue'
 import { supabase } from '@/supabase'
 import { useToastStore } from '@/stores/toast'
+import ActionNavigationBar from '../ActionNavigationBar.vue'
 
 const toastStore = useToastStore()
 
@@ -136,7 +137,7 @@ const upsertTarget = async (type: 'daily' | 'meal') => {
       </div>
     </div>
 
-    <button class="btn btn-primary mt-6" type="submit">Save</button>
+    <button class="btn btn-primary mt-4 w-36 text-sm" type="submit">Save</button>
   </form>
 
   <hr class="my-10" />
@@ -216,6 +217,8 @@ const upsertTarget = async (type: 'daily' | 'meal') => {
       </div>
     </div>
 
-    <button class="btn btn-primary mt-6" type="submit">Save</button>
+    <button class="btn btn-primary mt-4 w-36 text-sm" type="submit">Save</button>
   </form>
+
+  <ActionNavigationBar></ActionNavigationBar>
 </template>

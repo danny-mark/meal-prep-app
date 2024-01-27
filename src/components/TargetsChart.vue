@@ -28,7 +28,7 @@ const getPercentage = (item: MacroKey): number => {
       </div>
 
       <progress
-        class="w-full"
+        class="w-full text-xs"
         :class="getPercentage(item) > 100 ? 'over-limit' : ''"
         :value="getPercentage(item)"
         max="100"

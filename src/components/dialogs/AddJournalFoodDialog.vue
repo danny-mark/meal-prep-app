@@ -68,6 +68,10 @@ const addFood = () => {
   closeAndResetDialog()
 }
 
+const cancelFoodSelection = () => {
+  selectedFood.value = null
+}
+
 const closeAndResetDialog = () => {
   emit('closed')
   selectedFood.value = null
@@ -82,16 +86,10 @@ const closeAndResetDialog = () => {
     </template>
 
     <template #body>
-      <FoodSelector
-        @food-item-selected="(food) => (selectedFood = food)"
-        :selected-food-item="selectedFood"
-        :key="foodSelectorKey"
-      />
-
-      <div v-if="selectedFood && macrosCalculated" class="m-2">
+      <div v-if="selectedFood && macrosCalculated" class="mb-8">
         <hr class="my-6" />
 
-        <div class="flex">
+        <div class="flex justify-between">
           <div class="mr-8 text-left" style="width: 120px">
             <h5 class="font-bold">{{ selectedFood.name }}</h5>
             <p class="mb-2 text-xs text-muted">{{ selectedFood.category }}</p>
@@ -113,8 +111,18 @@ const closeAndResetDialog = () => {
           </div>
         </div>
 
-        <button class="btn btn-primary btn-block mt-6" @click="addFood">Add Food</button>
+        <div class="mt-6 flex">
+          <button class="btn btn-outline btn-sm mr-2" @click="cancelFoodSelection">Back</button>
+          <button class="btn btn-primary btn-sm" @click="addFood">Add Food</button>
+        </div>
       </div>
+
+      <FoodSelector
+        v-else
+        @food-item-selected="(food) => (selectedFood = food)"
+        :selected-food-item="selectedFood"
+        :key="foodSelectorKey"
+      />
     </template>
   </Dialog>
 </template>

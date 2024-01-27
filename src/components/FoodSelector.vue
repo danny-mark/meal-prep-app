@@ -75,14 +75,16 @@ watchEffect(async () => {
   </div>
 
   <h4 class="my-8 text-center" v-if="!foods.length">No Results</h4>
-  <div v-else class="grid grid-cols-2 gap-2 text-left sm:grid-cols-3 md:grid-cols-4">
+  <div v-else class="grid grid-cols-1 gap-2 text-left sm:grid-cols-3 md:grid-cols-4">
     <div
       v-for="(item, index) in foods"
-      class="cursor-pointer rounded border-2 p-2 text-sm"
-      :class="selectedFoodItem && selectedFoodItem.id == item.id ? 'border-primary' : ''"
+      class="cursor-pointer rounded border-2 border-l-8 p-2 text-sm"
+      :class="selectedFoodItem && selectedFoodItem.id == item.id ? 'border-gray-400' : ''"
       @click="$emit('foodItemSelected', item)"
+      :style="{ borderLeftColor: globals.foodCategoryColorMap.get(item.category) }"
     >
-      {{ item.name }}
+      <b>{{ item.name }}</b>
+      <span class="ml-2 text-sm text-muted">{{ item.note }}</span>
     </div>
   </div>
 </template>

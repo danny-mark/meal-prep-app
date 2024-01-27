@@ -2,6 +2,9 @@
 import type { JournalEntry } from '@/custom_types/JournalEntry.type'
 import IconTrash from '@/components/icons/IconTrash.vue'
 import IconPlusSquare from '@/components/icons/IconPlusSquare.vue'
+import { useGlobalStore } from '@/stores/globalStatic'
+
+const globals = useGlobalStore()
 
 const emit = defineEmits(['foodClicked', 'trashClicked', 'addClicked'])
 
@@ -13,10 +16,11 @@ const props = defineProps<{
 <template>
   <div class="flex flex-wrap text-left">
     <div
-      class="relative mb-2 mr-2 cursor-default rounded border border-gray-400 p-2 pr-14 text-sm"
+      class="relative mb-2 mr-2 cursor-default rounded border-2 border-gray-400 p-2 pr-14 text-sm"
       v-for="(mealFood, j) in entry.contents"
       :key="j"
       @click="$emit('foodClicked', entry, j)"
+      :style="{ borderColor: globals.foodCategoryColorMap.get(mealFood.category) }"
     >
       <b>{{ mealFood.name }}</b>
       <p>{{ mealFood.amount }} g</p>

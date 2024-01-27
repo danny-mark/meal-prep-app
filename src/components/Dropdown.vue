@@ -16,10 +16,10 @@ const onMenuItemClick = (option: string) => {
 </script>
 
 <template>
-  <div class="relative z-50 items-center justify-center bg-gray-100">
+  <div class="relative z-50 items-center justify-center">
     <div class="relative w-36">
       <button
-        class="btn btn-outline flex w-full items-center justify-between"
+        class="btn btn-outline btn-sm flex w-full items-center justify-between"
         @click="isOptionsExpanded = !isOptionsExpanded"
         @blur="isOptionsExpanded = false"
       >
@@ -41,7 +41,7 @@ const onMenuItemClick = (option: string) => {
       </button>
       <ul
         v-show="isOptionsExpanded"
-        class="absolute left-0 right-0 mb-4 mt-1 overflow-hidden rounded-lg border bg-white py-2 shadow-lg"
+        class="absolute bottom-full left-0 right-0 mb-4 mt-1 overflow-hidden rounded-lg border bg-white py-2 shadow-lg"
       >
         <li
           v-for="(option, index) in options"

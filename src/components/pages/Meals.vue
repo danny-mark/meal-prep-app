@@ -3,6 +3,7 @@ import MealSelector from '../MealSelector.vue'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import type { FavoriteMeal } from '@/custom_types/JournalEntry.type'
+import ActionNavigationBar from '../ActionNavigationBar.vue'
 
 const foodEditorItem: Ref<FavoriteMeal | null> = ref(null)
 const mealSelectorKey: Ref<number> = ref(0)
@@ -21,4 +22,7 @@ const forceFoodSelectorRerender = () => {
     :key="mealSelectorKey"
     :selected-meal-item="foodEditorItem"
   />
+
+  <ActionNavigationBar></ActionNavigationBar>
+
 </template>

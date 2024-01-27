@@ -2,6 +2,7 @@
 import { useSessionStore } from '@/stores/session'
 import { useToastStore } from '@/stores/toast'
 import { supabase } from '@/supabase'
+import ActionNavigationBar from '../ActionNavigationBar.vue'
 
 const session = useSessionStore()
 const toastStore = useToastStore()
@@ -26,4 +27,6 @@ async function signOut() {
   <div>
     <button class="btn btn-outline mt-8 w-40" @click="signOut">Sign Out</button>
   </div>
+
+  <ActionNavigationBar></ActionNavigationBar>
 </template>

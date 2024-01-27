@@ -51,7 +51,8 @@ const upsertFoodItem = async () => {
   const { data, error } = await supabase
     .from('food_items')
     .upsert({
-      ...foodForm.value
+      ...foodForm.value,
+      last_used_at: new Date()
     })
     .select()
 
@@ -141,22 +142,10 @@ const deleteFoodItem = async () => {
 
           <div class="mb-4 text-left">
             <label class="block text-sm text-gray-700">
-              <b>Protein (g)</b>
+              <b>Calories (kcal)</b>
               <input
                 class="form-input mt-2"
-                v-model="foodForm.macros.protein"
-                type="number"
-                step="any"
-              />
-            </label>
-          </div>
-
-          <div class="mb-4 text-left">
-            <label class="block text-sm text-gray-700">
-              <b>Carbs (g)</b>
-              <input
-                class="form-input mt-2"
-                v-model="foodForm.macros.carbs"
+                v-model="foodForm.macros.calories"
                 type="number"
                 step="any"
               />
@@ -177,10 +166,10 @@ const deleteFoodItem = async () => {
 
           <div class="mb-4 text-left">
             <label class="block text-sm text-gray-700">
-              <b>Fiber (g)</b>
+              <b>Carbs (g)</b>
               <input
                 class="form-input mt-2"
-                v-model="foodForm.macros.fiber"
+                v-model="foodForm.macros.carbs"
                 type="number"
                 step="any"
               />
@@ -189,10 +178,22 @@ const deleteFoodItem = async () => {
 
           <div class="mb-4 text-left">
             <label class="block text-sm text-gray-700">
-              <b>Calories (kcal)</b>
+              <b>Protein (g)</b>
               <input
                 class="form-input mt-2"
-                v-model="foodForm.macros.calories"
+                v-model="foodForm.macros.protein"
+                type="number"
+                step="any"
+              />
+            </label>
+          </div>
+
+          <div class="mb-4 text-left">
+            <label class="block text-sm text-gray-700">
+              <b>Fiber (g)</b>
+              <input
+                class="form-input mt-2"
+                v-model="foodForm.macros.fiber"
                 type="number"
                 step="any"
               />
