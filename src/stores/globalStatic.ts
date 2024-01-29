@@ -23,7 +23,8 @@ export const useGlobalStore = defineStore('globals', () => {
     ['fruit', '#e74c3c'], // Red
     ['supplement', '#ecf0f1'], // White
     ['snack', '#9b59b6'], // Purple
-    ['desert', '#000']
+    ['desert', '#000'],
+    ['complete meal', 'darkgray']
   ])
 
   return { macros, foodCategories, foodCategoryColorMap }

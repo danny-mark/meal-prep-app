@@ -16,8 +16,8 @@ const props = defineProps<{
   foodEditorItem: FoodItem | null
 }>()
 
-interface FoodFormType extends Omit<FoodItem, 'created_at' | 'last_used_at' | 'macros'> {
-  macros: {
+interface FoodFormType extends Omit<FoodItem, 'created_at' | 'last_used_at' | 'macros_per_100'> {
+  macros_per_100: {
     protein?: number
     carbs?: number
     fat?: number
@@ -30,13 +30,15 @@ let foodFormDefault: FoodFormType = {
   name: '',
   note: '',
   category: 'protein',
-  macros: {},
-  is_favorite: false
+  macros_per_100: {},
+  is_favorite: false,
+  is_recipe: false,
+  recipe_contents: []
 }
 
 const foodForm: Ref<FoodFormType> = ref({
   ...foodFormDefault,
-  macros: { ...foodFormDefault.macros }
+  macros_per_100: { ...foodFormDefault.macros_per_100 }
 })
 
 watch(
@@ -48,10 +50,12 @@ watch(
 )
 
 const upsertFoodItem = async () => {
+  let { recipe_contents, ...foodFormVals } = foodForm.value
+
   const { data, error } = await supabase
     .from('food_items')
     .upsert({
-      ...foodForm.value,
+      ...foodFormVals,
       last_used_at: new Date()
     })
     .select()
@@ -73,7 +77,7 @@ const upsertFoodItem = async () => {
 
   foodForm.value = {
     ...foodFormDefault,
-    macros: { ...foodFormDefault.macros }
+    macros_per_100: { ...foodFormDefault.macros_per_100 }
   }
 }
 
@@ -100,7 +104,7 @@ const deleteFoodItem = async () => {
 <template>
   <Dialog :isOpen="isOpen" @dialog-closed-event="$emit('closed')">
     <template #title>
-      <h3 class="text-xl font-bold">{{ foodEditorItem ? 'Edit food' : 'Add Food' }}</h3>
+      <h3 class="text-xl font-bold">{{ foodEditorItem ? 'Edit Food' : 'Add Food' }}</h3>
     </template>
 
     <template #body>
@@ -145,7 +149,7 @@ const deleteFoodItem = async () => {
               <b>Calories (kcal)</b>
               <input
                 class="form-input mt-2"
-                v-model="foodForm.macros.calories"
+                v-model="foodForm.macros_per_100.calories"
                 type="number"
                 step="any"
               />
@@ -157,7 +161,7 @@ const deleteFoodItem = async () => {
               <b>Fat (g)</b>
               <input
                 class="form-input mt-2"
-                v-model="foodForm.macros.fat"
+                v-model="foodForm.macros_per_100.fat"
                 type="number"
                 step="any"
               />
@@ -169,7 +173,7 @@ const deleteFoodItem = async () => {
               <b>Carbs (g)</b>
               <input
                 class="form-input mt-2"
-                v-model="foodForm.macros.carbs"
+                v-model="foodForm.macros_per_100.carbs"
                 type="number"
                 step="any"
               />
@@ -181,7 +185,7 @@ const deleteFoodItem = async () => {
               <b>Protein (g)</b>
               <input
                 class="form-input mt-2"
-                v-model="foodForm.macros.protein"
+                v-model="foodForm.macros_per_100.protein"
                 type="number"
                 step="any"
               />
@@ -193,7 +197,7 @@ const deleteFoodItem = async () => {
               <b>Fiber (g)</b>
               <input
                 class="form-input mt-2"
-                v-model="foodForm.macros.fiber"
+                v-model="foodForm.macros_per_100.fiber"
                 type="number"
                 step="any"
               />

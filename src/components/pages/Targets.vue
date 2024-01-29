@@ -217,7 +217,7 @@ const upsertTarget = async (type: 'daily' | 'meal') => {
       </div>
     </div>
 
-    <button class="btn btn-primary mt-4 w-36 text-sm" type="submit">Save</button>
+    <button class="btn btn-primary mb-8 mt-4 w-36 text-sm" type="submit">Save</button>
   </form>
 
   <ActionNavigationBar></ActionNavigationBar>

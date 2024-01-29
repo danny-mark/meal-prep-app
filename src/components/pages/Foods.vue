@@ -27,6 +27,7 @@ const openFoodEditor = (item: FoodItem | null) => {
     @food-item-selected="openFoodEditor"
     :key="foodSelectorKey"
     :selected-food-item="foodEditorItem"
+    mode="foods"
   />
 
   <FoodEditorDialog

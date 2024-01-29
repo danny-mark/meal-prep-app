@@ -9,7 +9,7 @@ import AddJournalFoodDialog from '../dialogs/AddJournalFoodDialog.vue'
 import EditJournalFoodDialog from '../dialogs/EditJournalFoodDialog.vue'
 import FavoriteMealEditorDialog from '../dialogs/FavoriteMealEditorDialog.vue'
 import AddJournalMealDialog from '../dialogs/AddJournalMealDialog.vue'
-import MealContentsList from '../MealContentsList.vue'
+import IngredientsList from '../IngredientsList.vue'
 import IconRepeat from '@/components/icons/IconRepeat.vue'
 import IconTrash from '@/components/icons/IconTrash.vue'
 import IconStarOutline from '@/components/icons/IconStarOutline.vue'
@@ -368,13 +368,12 @@ const deleteEntry = async (entry: JournalEntry) => {
           </div>
         </div>
 
-        <MealContentsList
-          class="my-4"
-          :entry="entry"
-          @food-clicked="editJournalFood"
-          @trash-clicked="removeFoodFromMeal"
+        <IngredientsList
+          :foods="entry.contents"
+          @food-clicked="(index: number) => editJournalFood(entry, index)"
+          @trash-clicked="(index: number) => removeFoodFromMeal(entry, index)"
           @add-clicked="() => (addFoodDialogState = { isOpen: true, entry })"
-        />
+        ></IngredientsList>
       </div>
     </div>
   </div>
@@ -397,6 +396,7 @@ const deleteEntry = async (entry: JournalEntry) => {
 
   <AddJournalFoodDialog
     :is-open="addFoodDialogState.isOpen"
+    mode="all"
     @closed="addFoodDialogState.isOpen = false"
     @foodAdded="addFoodToEntry"
   />

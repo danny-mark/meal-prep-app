@@ -4,7 +4,7 @@ import type { Ref } from 'vue'
 import Dialog from './Dialog.vue'
 import { supabase } from '@/supabase'
 import TargetsSimple from '../TargetsSimple.vue'
-import MealContentsList from '../MealContentsList.vue'
+import IngredientsList from '../IngredientsList.vue'
 import { sumMealMacros } from '@/shared/calculateMacros'
 import type { JournalEntry } from '@/custom_types/JournalEntry.type'
 import type { Macros } from '@/custom_types/Macros.type'
@@ -84,13 +84,12 @@ const saveToFavorites = async () => {
 
           <!-- TODO: make these editable from this dialog -->
 
-          <MealContentsList
+          <!-- <IngredientsList
             class="mt-6"
-            :entry="entry"
             @food-clicked="() => {}"
             @trash-clicked="() => {}"
             @add-clicked="() => {}"
-          />
+          /> -->
 
           <button class="btn btn-primary btn-block mt-6" type="submit">Save</button>
         </form>

@@ -8,5 +8,11 @@ export interface FoodItem {
   created_at: Date
   last_used_at: Date
   is_favorite: boolean
-  macros: Macros
+  macros_per_100: Macros
+  is_recipe: boolean
+  recipe_contents: Ingredient[]
+}
+
+export interface Ingredient extends FoodItem {
+  amount: number
 }

@@ -12,6 +12,7 @@ const emit = defineEmits(['foodItemSelected'])
 
 const props = defineProps<{
   selectedFoodItem: FoodItem | null
+  mode: 'all' | 'foods' | 'recipes'
 }>()
 
 const foods: Ref<FoodItem[]> = ref([])
@@ -21,7 +22,11 @@ const categoryFilter: Ref<String> = ref('all')
 watchEffect(async () => {
   let query = supabase
     .from('food_items')
-    .select()
+    .select(
+      `
+    *,
+    recipe_contents!recipe_food_id(ingredient_food_id(*), amount)`
+    )
     .limit(20)
     .order('last_used_at', { ascending: false, nullsFirst: false })
 
@@ -33,12 +38,28 @@ watchEffect(async () => {
     query = query.eq('category', categoryFilter.value)
   }
 
+  if (props.mode != 'all') {
+    query = query.eq('is_recipe', props.mode == 'recipes')
+  }
+
   const { data, error } = await query
 
   if (error) {
     toastStore.showErrorToast(error.message)
     return
   }
+
+  // Clean up the recursive many-to-many same table join
+  data.map((f) => {
+    if (!f.is_recipe) return f
+
+    let tmp = []
+    for (const ingredient of f.recipe_contents) {
+      tmp.push({ ...ingredient.ingredient_food_id, amount: ingredient.amount }) // remove this prop and get its value instead
+    }
+    f.recipe_contents = tmp
+    return f
+  })
 
   foods.value = data as FoodItem[]
 })

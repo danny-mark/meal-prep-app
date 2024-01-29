@@ -15,6 +15,7 @@ const emit = defineEmits(['closed', 'foodAdded'])
 
 const props = defineProps<{
   isOpen: boolean
+  mode: 'all' | 'foods' | 'recipes'
 }>()
 
 const selectedFood: Ref<FoodItem | null> = ref(null)
@@ -37,7 +38,7 @@ watch(selectedFood, (newSelected) => {
 
 const macrosCalculated: Ref<Macros | null> = computed(() => {
   if (!selectedFood.value) return null
-  return calculateMacrosPerAmount(selectedFood.value.macros, selectedFoodAmount.value)
+  return calculateMacrosPerAmount(selectedFood.value.macros_per_100, selectedFoodAmount.value)
 })
 
 const addFood = () => {
@@ -51,14 +52,14 @@ const addFood = () => {
   // TODO: doing this in localStorage was not necessary, we do a DB write anyway to save the last_used_at
   ;(rememberedAmounts.value as DynamicObject)[selectedFood.value.id] = selectedFoodAmount.value
 
-  let { id, name, macros, category, note } = selectedFood.value
+  let { id, name, macros_per_100, category, note } = selectedFood.value
   let amount = selectedFoodAmount.value
   let foodEntry: JournalFood = {
     id,
     name,
     category,
     note,
-    macros_per_100: macros,
+    macros_per_100,
     macros_calculated: macrosCalculated.value,
     amount
   } as JournalFood
@@ -122,6 +123,7 @@ const closeAndResetDialog = () => {
         @food-item-selected="(food) => (selectedFood = food)"
         :selected-food-item="selectedFood"
         :key="foodSelectorKey"
+        :mode="mode"
       />
     </template>
   </Dialog>
