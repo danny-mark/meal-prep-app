@@ -36,7 +36,6 @@ let recipeFormDefault: RecipeFormType = {
 }
 
 const macrosCalculated: Ref<Macros | null> = computed(() => {
-  if (!props.recipeEditorItem) return null
   return sumRecipeMacrosPer100(recipeForm.value.recipe_contents)
 })
 

@@ -199,7 +199,7 @@ const addFoodToEntry = async (addedFood: JournalFood) => {
 
 const repeatEntry = async (entry: JournalEntry) => {
   const { data, error } = await supabase.from('diary_entries').insert({
-    date: dateStore.date,
+    date: new Date(),
     contents: entry.contents,
     type: entry.type,
     favorite_meal_id: entry.favorite_meals?.id

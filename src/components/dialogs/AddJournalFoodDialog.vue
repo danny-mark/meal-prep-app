@@ -3,6 +3,7 @@ import { ref, watch, computed } from 'vue'
 import type { Ref } from 'vue'
 import Dialog from './Dialog.vue'
 import FoodSelector from '../FoodSelector.vue'
+import AmountIncrementButtonsRow from '@/components/AmountIncrementButtonsRow.vue'
 import type { FoodItem } from '@/custom_types/FoodItem.type'
 import type { Macros, MacroKey } from '@/custom_types/Macros.type'
 import { useLocalStorage } from '@vueuse/core'
@@ -111,6 +112,15 @@ const closeAndResetDialog = () => {
             </div>
           </div>
         </div>
+
+        <AmountIncrementButtonsRow
+          :amount="selectedFoodAmount"
+          :set-amount="
+            (newVal: number) => {
+              selectedFoodAmount = newVal
+            }
+          "
+        />
 
         <div class="mt-6 flex">
           <button class="btn btn-outline btn-sm mr-2" @click="cancelFoodSelection">Back</button>

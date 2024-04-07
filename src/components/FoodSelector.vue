@@ -75,7 +75,7 @@ watchEffect(async () => {
             type="search"
             class="form-input ml-2"
             placeholder="Search"
-            @search="(e: Event) => (search = (e.target as HTMLInputElement).value.trim())"
+            @input="(e: Event) => (search = (e.target as HTMLInputElement).value.trim())"
           />
         </label>
       </div>

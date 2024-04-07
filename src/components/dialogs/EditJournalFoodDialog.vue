@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue'
 import type { Ref } from 'vue'
+import AmountIncrementButtonsRow from '@/components/AmountIncrementButtonsRow.vue'
 import Dialog from './Dialog.vue'
 import type { Macros, MacroKey } from '@/custom_types/Macros.type'
 import { useLocalStorage } from '@vueuse/core'
@@ -87,6 +88,15 @@ const updateFoodAmount = () => {
             </div>
           </div>
         </div>
+
+        <AmountIncrementButtonsRow
+          :amount="amount"
+          :set-amount="
+            (newVal: number) => {
+              amount = newVal
+            }
+          "
+        />
 
         <button class="btn btn-primary btn-block mt-6" @click="updateFoodAmount">Save</button>
       </div>
