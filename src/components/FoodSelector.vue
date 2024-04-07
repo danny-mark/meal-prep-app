@@ -4,6 +4,7 @@ import { supabase } from '@/supabase'
 import { ref, watchEffect } from 'vue'
 import type { Ref } from 'vue'
 import type { FoodItem } from '@/custom_types/FoodItem.type'
+import { useDebounceFn } from '@vueuse/core'
 import { useGlobalStore } from '@/stores/globalStatic'
 const globals = useGlobalStore()
 const toastStore = useToastStore()
@@ -63,6 +64,10 @@ watchEffect(async () => {
 
   foods.value = data as FoodItem[]
 })
+
+const onSearchInput = useDebounceFn((e: Event) => {
+  search.value = (e.target as HTMLInputElement).value.trim()
+}, 400)
 </script>
 
 <template>
@@ -75,7 +80,7 @@ watchEffect(async () => {
             type="search"
             class="form-input ml-2"
             placeholder="Search"
-            @input="(e: Event) => (search = (e.target as HTMLInputElement).value.trim())"
+            @input="onSearchInput"
           />
         </label>
       </div>
