@@ -5,6 +5,7 @@ import { ref, watchEffect } from 'vue'
 import type { Ref } from 'vue'
 import type { FavoriteMeal } from '@/custom_types/JournalEntry.type'
 import IconTrash from '@/components/icons/IconTrash.vue'
+import IconEdit from '@/components/icons/IconEdit.vue'
 
 const toastStore = useToastStore()
 
@@ -84,7 +85,7 @@ const removeFromFavorites = async (meal: FavoriteMeal) => {
 
       <div class="flex">
         <div class="cursor-pointer p-2 text-primary" @click.stop="$emit('editMeal', item)" title="Edit meal">
-          ✏️
+          <IconEdit />
         </div>
         <div class="cursor-pointer p-2 text-danger" @click.stop="removeFromFavorites(item)">
           <IconTrash />

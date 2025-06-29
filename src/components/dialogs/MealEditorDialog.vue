@@ -112,6 +112,16 @@ const mealMacros = computed(() => {
     calories: contents.value.reduce((sum, food) => sum + food.macros_calculated.calories, 0)
   }
 })
+
+const filteredMealTargets = computed(() => {
+  const filtered: any = {}
+  Object.entries(props.mealTargets).forEach(([key, value]) => {
+    if (value > 0) {
+      filtered[key] = value
+    }
+  })
+  return filtered
+})
 </script>
 
 <template>
@@ -129,7 +139,7 @@ const mealMacros = computed(() => {
           </label>
         </div>
 
-        <TargetsSimple :targets="mealTargets" :consumed="mealMacros" />
+        <TargetsSimple :targets="filteredMealTargets" :consumed="mealMacros" />
 
         <IngredientsList
           class="mt-6"

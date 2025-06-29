@@ -12,7 +12,7 @@ const props = defineProps<{
 <template>
   <div class="flex text-left">
     <div v-for="macro in globals.macros">
-      <div v-if="targets[macro as MacroKey]" class="mr-4 text-sm">
+      <div v-if="targets[macro as MacroKey] && targets[macro as MacroKey] > 0" class="mr-4 text-sm">
         <span class="text-muted">{{ macro }}</span>
         <p>
           {{ consumed[macro as MacroKey].toFixed(0) }} /

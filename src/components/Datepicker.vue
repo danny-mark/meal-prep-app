@@ -19,6 +19,7 @@ const dateStore = useDateStore()
         :clearable="false"
         position="right"
         locale="eu"
+        :calendar-icon="false"
       />
     </div>
 

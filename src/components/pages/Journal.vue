@@ -14,6 +14,7 @@ import IconRepeat from '@/components/icons/IconRepeat.vue'
 import IconTrash from '@/components/icons/IconTrash.vue'
 import IconStarOutline from '@/components/icons/IconStarOutline.vue'
 import IconStarFilled from '@/components/icons/IconStarFilled.vue'
+import IconEdit from '@/components/icons/IconEdit.vue'
 import Datepicker from '@/components/Datepicker.vue'
 import ActionNavigationBar from '@/components/ActionNavigationBar.vue'
 import { sumMealMacros } from '@/shared/calculateMacros'
@@ -385,12 +386,12 @@ const deleteEntry = async (entry: JournalEntry) => {
               <IconStarOutline />
             </div>
 
-            <div 
-              class="mr-2 cursor-pointer p-2 text-primary" 
+            <div
+              class="mr-2 cursor-pointer p-2 text-primary"
               @click.stop="editJournalMealDialogState = { isOpen: true, entry }"
               title="Edit meal"
             >
-              ✏️
+              <IconEdit />
             </div>
             <div class="mr-2 cursor-pointer p-2 text-primary" @click.stop="repeatEntry(entry)">
               <IconRepeat />
