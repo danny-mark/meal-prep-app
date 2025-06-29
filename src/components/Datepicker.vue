@@ -9,7 +9,7 @@ const dateStore = useDateStore()
   <div class="flex items-center gap-2">
     <button 
       @click="dateStore.goToPreviousDay()"
-      class="btn btn-sm btn-circle btn-ghost text-lg"
+      class="btn btn-ghost px-2 py-1 min-h-0 h-auto text-lg"
       title="Previous day"
     >
       ←
@@ -28,7 +28,7 @@ const dateStore = useDateStore()
     
     <button 
       @click="dateStore.goToNextDay()"
-      class="btn btn-sm btn-circle btn-ghost text-lg"
+      class="btn btn-ghost px-2 py-1 min-h-0 h-auto text-lg"
       title="Next day"
     >
       →
