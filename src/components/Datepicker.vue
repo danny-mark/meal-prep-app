@@ -6,16 +6,32 @@ const dateStore = useDateStore()
 </script>
 
 <template>
-  <!-- TODO: prev / next arrows for easier switching -->
-
-  <div style="max-width: 150px">
-    <VueDatePicker
-      v-model="dateStore.date"
-      auto-apply
-      :enable-time-picker="false"
-      :clearable="false"
-      position="right"
-      locale="eu"
-    />
+  <div class="flex items-center gap-2">
+    <button 
+      @click="dateStore.goToPreviousDay()"
+      class="btn btn-sm btn-circle btn-ghost text-lg"
+      title="Previous day"
+    >
+      ←
+    </button>
+    
+    <div style="max-width: 150px">
+      <VueDatePicker
+        v-model="dateStore.date"
+        auto-apply
+        :enable-time-picker="false"
+        :clearable="false"
+        position="right"
+        locale="eu"
+      />
+    </div>
+    
+    <button 
+      @click="dateStore.goToNextDay()"
+      class="btn btn-sm btn-circle btn-ghost text-lg"
+      title="Next day"
+    >
+      →
+    </button>
   </div>
 </template>
