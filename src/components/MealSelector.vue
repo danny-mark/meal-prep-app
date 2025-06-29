@@ -8,7 +8,7 @@ import IconTrash from '@/components/icons/IconTrash.vue'
 
 const toastStore = useToastStore()
 
-const emit = defineEmits(['mealItemSelected'])
+const emit = defineEmits(['mealItemSelected', 'editMeal'])
 
 const props = defineProps<{
   selectedMealItem: FavoriteMeal | null
@@ -82,8 +82,13 @@ const removeFromFavorites = async (meal: FavoriteMeal) => {
     >
       <span>{{ item.name }}</span>
 
-      <div class="cursor-pointer p-2 text-danger" @click.stop="removeFromFavorites(item)">
-        <IconTrash />
+      <div class="flex">
+        <div class="cursor-pointer p-2 text-primary" @click.stop="$emit('editMeal', item)" title="Edit meal">
+          ✏️
+        </div>
+        <div class="cursor-pointer p-2 text-danger" @click.stop="removeFromFavorites(item)">
+          <IconTrash />
+        </div>
       </div>
     </div>
   </div>

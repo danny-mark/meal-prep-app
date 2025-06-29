@@ -51,6 +51,12 @@ const addJournalMealDialogState: Ref<{
 }> = ref({
   isOpen: false
 })
+const editJournalMealDialogState: Ref<{
+  entry?: JournalEntry
+  isOpen: boolean
+}> = ref({
+  isOpen: false
+})
 
 const dailyTargets: Ref<Macros> = ref({
   protein: 70,
@@ -263,6 +269,26 @@ const addMealEntry = async (contents: JournalFood[], favoriteID: number) => {
   fetchEntries()
 }
 
+const editMealEntry = async (contents: JournalFood[], favoriteID: number) => {
+  const entry = editJournalMealDialogState.value.entry
+  if (!entry) return
+
+  const { data, error } = await supabase
+    .from('diary_entries')
+    .update({
+      contents,
+      favorite_meal_id: favoriteID
+    })
+    .eq('id', entry.id)
+
+  if (error) {
+    toastStore.showErrorToast(error.message)
+    return
+  }
+
+  fetchEntries()
+}
+
 const removeFoodFromMeal = async (entry: JournalEntry, indexToRemove: number) => {
   if (!confirm('Delete food from entry?')) return
 
@@ -359,6 +385,13 @@ const deleteEntry = async (entry: JournalEntry) => {
               <IconStarOutline />
             </div>
 
+            <div 
+              class="mr-2 cursor-pointer p-2 text-primary" 
+              @click.stop="editJournalMealDialogState = { isOpen: true, entry }"
+              title="Edit meal"
+            >
+              ✏️
+            </div>
             <div class="mr-2 cursor-pointer p-2 text-primary" @click.stop="repeatEntry(entry)">
               <IconRepeat />
             </div>
@@ -416,6 +449,13 @@ const deleteEntry = async (entry: JournalEntry) => {
     :is-open="addJournalMealDialogState.isOpen"
     @closed="addJournalMealDialogState.isOpen = false"
     @meal-added="addMealEntry"
+  />
+
+  <AddJournalMealDialog
+    :is-open="editJournalMealDialogState.isOpen"
+    :existing-entry="editJournalMealDialogState.entry"
+    @closed="editJournalMealDialogState.isOpen = false"
+    @meal-added="editMealEntry"
   />
 
   <FavoriteMealEditorDialog

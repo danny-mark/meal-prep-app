@@ -7,14 +7,10 @@ const dateStore = useDateStore()
 
 <template>
   <div class="flex items-center gap-2">
-    <button 
-      @click="dateStore.goToPreviousDay()"
-      class="btn btn-ghost px-2 py-1 min-h-0 h-auto text-lg"
-      title="Previous day"
-    >
+    <button @click="dateStore.goToPreviousDay()" class="px-2 py-1 text-lg" title="Previous day">
       ←
     </button>
-    
+
     <div style="max-width: 150px">
       <VueDatePicker
         v-model="dateStore.date"
@@ -25,13 +21,7 @@ const dateStore = useDateStore()
         locale="eu"
       />
     </div>
-    
-    <button 
-      @click="dateStore.goToNextDay()"
-      class="btn btn-ghost px-2 py-1 min-h-0 h-auto text-lg"
-      title="Next day"
-    >
-      →
-    </button>
+
+    <button @click="dateStore.goToNextDay()" class="px-2 py-1 text-lg" title="Next day">→</button>
   </div>
 </template>
